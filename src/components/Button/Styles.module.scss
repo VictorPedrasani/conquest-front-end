@@ -1,0 +1,32 @@
+.container {
+  button {
+    font-weight: bold;
+    font-size: 16px;
+    height: 40px;
+    width: 100%;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+
+    transition: background 250ms;
+  }
+}
+
+.primary {
+  background-color: #3fbe5b;
+  color: #000;
+
+  &:hover {
+    color: #fff;
+    background-color: #317a41;
+  }
+}
+.cancel {
+  background-color: rgb(247, 73, 73);
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+    background-color: #ca5757;
+  }
+}
