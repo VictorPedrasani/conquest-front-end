@@ -3,7 +3,7 @@ import { Toggle } from 'rsuite'
 import styles from './UserItem.module.scss'
 import 'rsuite/dist/rsuite.min.css'
 
-export default function UserItem({ user }) {
+export function UserItem({ user }) {
   const [toggleIsActive, setToggleIsActive] = useState(false)
 
   return (
