@@ -1,30 +1,28 @@
 import { useEffect, useState } from 'react'
+import axios from 'axios'
 import styles from '@/styles/pages/user/List.module.scss'
 import { UserItem } from '@/components/pages/user/UserItem'
 
-const usersMock = [
-  {
-    id: 1,
-    name: 'Victor pedrasani',
-    email: 'victor.p@gmail.com',
-    status: true,
-    group: 'administrador',
-  },
-  {
-    id: 2,
-    name: 'gustavo santos',
-    email: 'gustavo.s@gmail.com',
-    status: false,
-    group: 'administrador',
-  },
-]
+async function getData() {
+  try {
+    const response = await axios.get('http://localhost:8080/conquest/user/listusers');
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export default function List() {
   const [userList, setUserList] = useState([])
 
   useEffect(() => {
-    // todo: criar requisicao para retornar a lista de usuarios
-    setUserList(usersMock)
+    async function fetchData() {
+      const result = await getData();
+      setUserList(result);
+    }
+    fetchData();
+    setUserList(getData())
   }, [])
 
   return (
@@ -39,8 +37,8 @@ export default function List() {
             Cadastro de usuário
           </button>
         </div>
-        {userList.map((user) => (
-          <UserItem key={user.id} user={user} />
+        {userList.map((nameUser) => (
+          <UserItem key={nameUser.id} user={nameUser} />
         ))}
 
         {/* <div className={styles.actions}>

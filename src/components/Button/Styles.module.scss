@@ -8,13 +8,13 @@
     border: none;
     cursor: pointer;
 
-    transition: background 250ms;
+    transition: background 100ms;
   }
 }
 
 .primary {
   background-color: #3fbe5b;
-  color: #000;
+  color: #fff;
 
   &:hover {
     color: #fff;
@@ -22,8 +22,10 @@
   }
 }
 .cancel {
-  background-color: rgb(247, 73, 73);
+  background-color: #ff6868;
   color: #fff;
+  margin-bottom: 10px;
+  margin-top: 10px;
 
   &:hover {
     color: #fff;

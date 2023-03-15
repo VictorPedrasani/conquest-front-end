@@ -7,8 +7,8 @@ export default function Home() {
         <h1>Tela provisoria</h1>
       </div>
       <div className={styles.data}>
-        <button type="button">Usuario cliente</button>
-        <button type="button">Usuário funcionario</button>
+        <button type="button">Lista de produtos</button>
+        <button type="button">Lista de usuário</button>
       </div>
     </div>
   )

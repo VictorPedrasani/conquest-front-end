@@ -8,6 +8,8 @@ export default function Home() {
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
+  const [senha2, setSenha2] = useState('')
+  const [grupo, setGrupo] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -16,11 +18,15 @@ export default function Home() {
       cpf,
       email,
       senha,
+      grupo,
     }
 
-    console.log(payload)
+    console.log(JSON.stringify(payload))
     // mandar dados para o back
   }
+
+  const handleLogin = () =>
+    senha === senha2 ? alert('esta correto') : alert('não é possível')
 
   return (
     <div className={styles.container}>
@@ -58,20 +64,32 @@ export default function Home() {
             label="Senha:"
           />
           <Input
+            value={senha2}
+            onChange={(e) => setSenha2(e.target.value)}
             type="text"
-            placeholder="Digite sua "
+            placeholder="Digite sua senha"
             label="Repita sua senha:"
           />
           <span>Grupo: </span>
-          <input type="radio" name="grupo" value="adm" />
+          <input
+            onChange={() => setGrupo(1)}
+            type="radio"
+            name="grupo"
+            value={1}
+          />
           Administrador
-          <input type="radio" name="grupo" value="stq" />
+          <input
+            onChange={() => setGrupo(2)}
+            type="radio"
+            name="grupo"
+            value={2}
+          />
           Estoquista
           <div className={styles.submit}>
             <Button type="reset" color="cancel">
               Cancelar
             </Button>
-            <Button type="submit" color="primary">
+            <Button type="submit" color="primary" onClick={handleLogin}>
               Salvar
             </Button>
           </div>
