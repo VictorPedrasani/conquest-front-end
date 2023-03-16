@@ -33,8 +33,12 @@ export default function Home() {
         onChange={(e) => setSenha(e.target.value)} 
         type="password" 
         placeholder="senha" />
-        <button type="button" onClick={handleSubmit}>Acessar</button>
-      </form>
+        <button type="button" onClick={() => {
+          handleSubmit()
+          window.location.href = "http://localhost:3000/mainProvisoria"
+        } }>
+  Acessar
+</button></form>
       {/* <div className={styles.newRegister}>
         <p>Não tem cadastro?</p>
         <button type="button">Registrar</button>

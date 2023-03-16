@@ -4,29 +4,48 @@ import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
 
 export default function Home() {
-  const [nome, setNome] = useState('')
+  const [nameUser, setNameUser] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
-  const [senha2, setSenha2] = useState('')
-  const [grupo, setGrupo] = useState('')
+  const [password, setPassword] = useState('')
+  const [password2, setPassword2] = useState('')
+  const [group, setGroup] = useState('')
+
+  const postUser = () => {
+    const user = {}
+    user.nameUser = nameUser
+    user.cpf = cpf
+    user.email = email
+    user.password = password
+    user.group = group
+
+    fetch('http://localhost:8080/conquest/user/registeruser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error))
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const payload = {
-      nome,
+      nameUser,
       cpf,
       email,
-      senha,
-      grupo,
+      password,
+      group,
     }
 
     console.log(JSON.stringify(payload))
     // mandar dados para o back
   }
 
-  const handleLogin = () =>
-    senha === senha2 ? alert('esta correto') : alert('não é possível')
+  const handleLogin = () => password === password2 ? postUser() : alert('As senhas não conferem!')
 
   return (
     <div className={styles.container}>
@@ -36,8 +55,8 @@ export default function Home() {
       <div className={styles.data}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <Input
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            value={nameUser}
+            onChange={(e) => setNameUser(e.target.value)}
             type="text"
             placeholder="Digite seu nome"
             label="Nome:"
@@ -57,29 +76,29 @@ export default function Home() {
             label="e-mail:"
           />
           <Input
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            type="text"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
             placeholder="Digite sua senha"
             label="Senha:"
           />
           <Input
-            value={senha2}
-            onChange={(e) => setSenha2(e.target.value)}
-            type="text"
+            value={password2}
+            onChange={(e) => setPassword2(e.target.value)}
+            type="password"
             placeholder="Digite sua senha"
             label="Repita sua senha:"
           />
           <span>Grupo: </span>
           <input
-            onChange={() => setGrupo(1)}
+            onChange={() => setGroup(1)}
             type="radio"
             name="grupo"
             value={1}
           />
           Administrador
           <input
-            onChange={() => setGrupo(2)}
+            onChange={() => setGroup(2)}
             type="radio"
             name="grupo"
             value={2}

@@ -11,7 +11,7 @@ export function UserItem({ user }) {
       <div className={styles.userInfo}>
         <div>
           <p>Nome:</p>
-          <span>{user.name}</span>
+          <span>{user.nameUser}</span>
         </div>
         <div>
           <p>e-mail:</p>
