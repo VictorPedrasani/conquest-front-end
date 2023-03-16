@@ -5,6 +5,26 @@ export default function Home() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
+  const doLogin = () => {
+    let user = {}
+    user.email = email
+    user.senha = senha
+    let resposta = false
+
+    fetch('http://localhost:8080/conquest/user/loginbackoffice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(response => response.json())
+      .then(data => resposta = data.email === user.email && data.password === user.senha)
+      .catch(error => console.error(error))
+
+    return resposta
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const payload = {
@@ -33,10 +53,7 @@ export default function Home() {
         onChange={(e) => setSenha(e.target.value)} 
         type="password" 
         placeholder="senha" />
-        <button type="button" onClick={() => {
-          handleSubmit()
-          window.location.href = "http://localhost:3000/mainProvisoria"
-        } }>
+        <button type="button" onClick={() => doLogin ? alert("Login Correto!") : alert("login incorreto")} >
   Acessar
 </button></form>
       {/* <div className={styles.newRegister}>
