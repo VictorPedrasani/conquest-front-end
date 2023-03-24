@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import styles from '@/styles/pages/user/List.module.scss'
 import { UserItem } from '@/components/pages/user/UserItem'
-
+import { api } from '@/services/api'
+import { useRouter } from "next/router"
 
 export default function List() {
   const [userList, setUserList] = useState([])
-  
+  const router = useRouter()
   useEffect(() => {
-    fetch('http://localhost:8080/conquest/user/listusers')
-      .then(response => response.json())
-      .then(data => setUserList(data))
-      .catch(error => console.error('Erro:', error))
+    api.get('/conquest/user/listusers').then(({data}) => {
+      setUserList(data);
+    }).catch((error) => console.error(error))
   }, [])
 
   return (
@@ -21,12 +21,12 @@ export default function List() {
       <div className={styles.container}>
         <div className={styles.topbar}>
           <input type="text" placeholder="Busca de usuario" />
-          <button type="button" className={styles.userCad} >
+          <button onClick={()=>router.push("userCad")} type="button" className={styles.userCad}>
             Cadastro de usuário
           </button>
         </div>
-        {userList.map((nameUser) => (
-          <UserItem key={nameUser.id} user={nameUser} />
+        {userList.map((user) => (
+          <UserItem key={user.id} user={user} />
         ))}
 
         {/* <div className={styles.actions}>

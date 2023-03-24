@@ -1,24 +1,31 @@
+/* eslint-disable react/jsx-boolean-value */
 import { useState } from 'react'
 import styles from '@/styles/pages/user/UserCad.module.scss'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
+import { useRouter } from 'next/router'
 
-export default function Home() {
+export default function UserAlt() {
+
+  const router = useRouter()
+
+  console.log(JSON.parse(router.query.user))
+
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
-  const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [senha2, setSenha2] = useState('')
   const [grupo, setGrupo] = useState('')
+  const [status, setStatus] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const payload = {
       nome,
       cpf,
-      email,
       senha,
       grupo,
+      status,
     }
 
     console.log(JSON.stringify(payload))
@@ -31,7 +38,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.tittle}>
-        <h1>Cadastrar usuário</h1>
+        <h1>Alterar usuário</h1>
       </div>
       <div className={styles.data}>
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -50,13 +57,6 @@ export default function Home() {
             label="CPF:"
           />
           <Input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="text"
-            placeholder="Digite seu e-mail"
-            label="e-mail:"
-          />
-          <Input
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
             type="text"
@@ -67,7 +67,7 @@ export default function Home() {
             value={senha2}
             onChange={(e) => setSenha2(e.target.value)}
             type="text"
-            placeholder="Digite sua senha"
+            placeholder="Digite sua "
             label="Repita sua senha:"
           />
           <span>Grupo: </span>
@@ -85,6 +85,23 @@ export default function Home() {
             value={2}
           />
           Estoquista
+          <br />
+          <span>Status: </span>
+          <input
+            onChange={() => setStatus(0)}
+            type="radio"
+            name="status"
+            value={0}
+          />
+          inativo
+          <input
+            onChange={() => setStatus(1)}
+            type="radio"
+            name="status"
+            value={2}
+          />
+          Ativo
+
           <div className={styles.submit}>
             <Button type="reset" color="cancel">
               Cancelar
