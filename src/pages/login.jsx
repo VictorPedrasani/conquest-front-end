@@ -22,7 +22,7 @@ export default function Login() {
     ).then((response) => {
       console.log(response)
       router.push("/")
-    }).catch(() => alert("Usuário não encontrado"))
+    }).catch(() => alert("Acesso Negado! Erro ao autenticar login"))
   }
 
   return (

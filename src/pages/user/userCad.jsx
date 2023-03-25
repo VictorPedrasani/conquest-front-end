@@ -59,32 +59,38 @@ export default function Home() {
           <Input
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
-            type="text"
+            type="password"
             placeholder="Digite sua senha"
             label="Senha:"
           />
           <Input
             value={senha2}
             onChange={(e) => setSenha2(e.target.value)}
-            type="text"
+            type="password"
             placeholder="Digite sua senha"
             label="Repita sua senha:"
           />
-          <span>Grupo: </span>
-          <input
-            onChange={() => setGrupo(1)}
-            type="radio"
-            name="grupo"
-            value={1}
-          />
-          Administrador
-          <input
-            onChange={() => setGrupo(2)}
-            type="radio"
-            name="grupo"
-            value={2}
-          />
-          Estoquista
+          <div className={styles.grupo}>
+            <span>Grupo: </span>
+              <div className={styles.radio1}>
+                <input
+                  onChange={() => setGrupo(1)}
+                  type="radio"
+                  name="grupo"
+                  value={1}
+                />
+                &nbsp;Administrador
+              </div>
+              <div className={styles.radio2}>
+                <input
+                  onChange={() => setGrupo(2)}
+                  type="radio"
+                  name="grupo"
+                  value={2}
+                />
+                &nbsp;Estoquista
+              </div>
+          </div>
           <div className={styles.submit}>
             <Button type="reset" color="cancel">
               Cancelar
