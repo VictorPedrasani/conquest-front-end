@@ -9,7 +9,7 @@ const validarCPF = (CPF) => {
         return false
     }
 
-    for (i=1; i<=9; i++) {  
+    for (let i=1; i<=9; i++) {  
 	    soma = soma + parseInt(cpfLimpo.substring(i-1, i)) * (11 - i); 
     }
 
@@ -19,7 +19,7 @@ const validarCPF = (CPF) => {
     if (resto != parseInt(cpfLimpo.substring(9, 10)) )
 	return false;
 	soma = 0;
-    for (i = 1; i <= 10; i++) 
+    for (let i = 1; i <= 10; i++) 
        soma = soma + parseInt(cpfLimpo.substring(i-1, i)) * (12 - i);
     resto = (soma * 10) % 11
     
@@ -31,10 +31,11 @@ const validarCPF = (CPF) => {
     }
     return true
 }
-
+/*
 console.log(validarCPF("64893284029"))
 console.log(validarCPF("12332112312"))
 console.log(validarCPF("11111111111"))
 console.log(validarCPF('69160768010'))
+*/
 
 export default validarCPF

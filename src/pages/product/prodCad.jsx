@@ -9,7 +9,7 @@ import { router } from 'next/router';
 
 export default function Home(props) {
 
-  const [imagens, setImagens] = useState('')
+  const [imagens, setImagens] = useState([])
   const [nome, setNome] = useState('')
   //const [categoria, setCategoria] = useState('')
   const [valor, setValor] = useState('')
@@ -22,15 +22,15 @@ export default function Home(props) {
   const fillProduct = () => {
     const prod = {}
     prod.productName = nome
-    prod.productImages = imagens // TODO: destructuring operator
+    prod.productImages = [...imagens] // TODO: destructuring operator
     //prod.categoria = categoria
     prod.productValue = Number(valor)
     prod.productQuantity = estoque
     prod.productReview = avaliacao
     prod.productDescription = descricao
 
-    setJsonProd(JSON.stringify(jsonProd))
-    console.log(prod)
+    setJsonProd(JSON.stringify(prod))
+    console.log("fillProduct " + jsonProd)
   }
 
   const handleChange = (e, setFunction) => {
@@ -46,9 +46,11 @@ export default function Home(props) {
       setImagens(reader.result)
     }
   }
-
+  
   const saveProduct = () => {
     fillProduct()
+
+    console.log(jsonProd)
 
     api.post("conquest/backoffice/product/register", jsonProd
     ).then((response) => {

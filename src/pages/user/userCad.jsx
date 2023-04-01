@@ -1,7 +1,10 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import styles from '@/styles/pages/user/UserCad.module.scss'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
+import validarCPF from '@/util/validarCPF'
+import validarEmail from '@/util/validarEmail'
+import validarNome from '@/util/validarNome'
 
 export default function Home() {
   const [nome, setNome] = useState('')
@@ -10,6 +13,66 @@ export default function Home() {
   const [senha, setSenha] = useState('')
   const [senha2, setSenha2] = useState('')
   const [grupo, setGrupo] = useState('')
+
+
+  const checaCPF = (cpf) => {
+    if (validarCPF(cpf) == false) {
+      alert("CPF Inválido! Verifique a formatação do CPF")
+      setCpf('')
+      return false
+    } else {
+      setCpf(cpf)
+      return true
+    }
+  }
+
+  const checaNome = (nome) => {
+    if (validarNome(nome) == false) {
+      alert("Nome Inválido! Verifique se o nome não contém caracteres especiais")
+      setNome('')
+      return false
+    } else {
+      setNome(nome)
+      return true
+    }
+  }
+  const checaEmail = (email) => {
+    if (validarEmail(email) == false) {
+      alert("E-mail Inválido! Verifique se você informou um e-mail válido")
+      setEmail('')
+      return false
+    } else {
+      setEmail(email)
+      return true
+    }
+  }
+
+  const checaSenha = (senha, senha2) => {
+    if (senha !== senha2) {
+      alert("Senha Inválida!!!")
+      setSenha('')
+      setSenha2('')
+      return false
+    } else {
+      return true
+    }
+  }
+
+  const checaBotao = () => {
+    const radioButtons = document.querySelectorAll('input[name="grupo"]');
+    let isRadioSelected = false;
+
+    radioButtons.forEach(function (button) {
+      if (button.checked) {
+        isRadioSelected = true;
+      }
+    });
+
+    if (!isRadioSelected) {
+      alert("Nenhum botão de opção selecionado.");
+    }
+    return isRadioSelected
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -25,9 +88,17 @@ export default function Home() {
     // mandar dados para o back
   }
 
-  const handleLogin = () =>
-    senha === senha2 ? alert('esta correto') : alert('não é possível')
+  const handleLogin = () => {
+    let isValidCPF = checaCPF(cpf)
+    let isValidNome = checaNome(nome)
+    let isValidEmail = checaEmail(email)
+    let isValidSenha = checaSenha(senha, senha2)
+    let idCheckedBotao = checaBotao()
 
+    if (isValidCPF && isValidNome && isValidEmail && isValidSenha && idCheckedBotao){
+      //TODO Chamar função para mandar para o Back
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.tittle}>
@@ -41,6 +112,7 @@ export default function Home() {
             type="text"
             placeholder="Digite seu nome"
             label="Nome:"
+            maxLength="100"
           />
           <Input
             value={cpf}
@@ -48,13 +120,15 @@ export default function Home() {
             type="text"
             placeholder="Digite seu CPF"
             label="CPF:"
+            maxLength="11"
           />
           <Input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="text"
             placeholder="Digite seu e-mail"
-            label="e-mail:"
+            label="E-mail:"
+            maxLength="40"
           />
           <Input
             value={senha}
@@ -72,24 +146,24 @@ export default function Home() {
           />
           <div className={styles.grupo}>
             <span>Grupo: </span>
-              <div className={styles.radio1}>
-                <input
-                  onChange={() => setGrupo(1)}
-                  type="radio"
-                  name="grupo"
-                  value={1}
-                />
-                &nbsp;Administrador
-              </div>
-              <div className={styles.radio2}>
-                <input
-                  onChange={() => setGrupo(2)}
-                  type="radio"
-                  name="grupo"
-                  value={2}
-                />
-                &nbsp;Estoquista
-              </div>
+            <div className={styles.radio1}>
+              <input
+                onChange={() => setGrupo(1)}
+                type="radio"
+                name="grupo"
+                value={1}
+              />
+              &nbsp;Administrador
+            </div>
+            <div className={styles.radio2}>
+              <input
+                onChange={() => setGrupo(2)}
+                type="radio"
+                name="grupo"
+                value={2}
+              />
+              &nbsp;Estoquista
+            </div>
           </div>
           <div className={styles.submit}>
             <Button type="reset" color="cancel">
