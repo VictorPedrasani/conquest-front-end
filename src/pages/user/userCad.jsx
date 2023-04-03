@@ -5,6 +5,7 @@ import { Button } from '@/components/Button'
 import validarCPF from '@/util/validarCPF'
 import validarEmail from '@/util/validarEmail'
 import validarNome from '@/util/validarNome'
+import { useRouter } from 'next/router'
 
 export default function Home() {
   const [nome, setNome] = useState('')
@@ -13,7 +14,18 @@ export default function Home() {
   const [senha, setSenha] = useState('')
   const [senha2, setSenha2] = useState('')
   const [grupo, setGrupo] = useState('')
+  const router = useRouter()
 
+  const checaNome = (nome) => {
+    if (validarNome(nome) == false) {
+      alert("Nome Inválido! Verifique se o nome não contém caracteres especiais")
+      setNome('')
+      return false
+    } else {
+      setNome(nome)
+      return true
+    }
+  }
 
   const checaCPF = (cpf) => {
     if (validarCPF(cpf) == false) {
@@ -26,16 +38,6 @@ export default function Home() {
     }
   }
 
-  const checaNome = (nome) => {
-    if (validarNome(nome) == false) {
-      alert("Nome Inválido! Verifique se o nome não contém caracteres especiais")
-      setNome('')
-      return false
-    } else {
-      setNome(nome)
-      return true
-    }
-  }
   const checaEmail = (email) => {
     if (validarEmail(email) == false) {
       alert("E-mail Inválido! Verifique se você informou um e-mail válido")
@@ -69,7 +71,7 @@ export default function Home() {
     });
 
     if (!isRadioSelected) {
-      alert("Nenhum botão de opção selecionado.");
+      alert("Nenhum botão de opção selecionado!!!");
     }
     return isRadioSelected
   }
@@ -95,13 +97,17 @@ export default function Home() {
     let isValidSenha = checaSenha(senha, senha2)
     let idCheckedBotao = checaBotao()
 
-    if (isValidCPF && isValidNome && isValidEmail && isValidSenha && idCheckedBotao){
-      //TODO Chamar função para mandar para o Back
+    if (isValidNome && isValidCPF && isValidEmail && isValidSenha && idCheckedBotao) {
+      //TODO Chamar função para mandar para o Back e checar se o retorno da função deu como usuário cadastrado
+      //Depois que o usuário for cadastrado:
+      alert("Usuário Cadastrado!")
+      router.push("/user/list")
     }
   }
   return (
     <div className={styles.container}>
       <div className={styles.tittle}>
+        <button onClick={() => router.push("/user/list")} type="button">Voltar</button>
         <h1>Cadastrar usuário</h1>
       </div>
       <div className={styles.data}>
@@ -166,7 +172,14 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.submit}>
-            <Button type="reset" color="cancel">
+            <Button type="reset" color="cancel" onClick={() => {
+              setNome('');
+              setCpf('');
+              setEmail('');
+              setSenha('');
+              setSenha2('');
+              setGrupo('');
+            }}>
               Cancelar
             </Button>
             <Button type="submit" color="primary" onClick={handleLogin}>

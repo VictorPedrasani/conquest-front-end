@@ -16,12 +16,13 @@ export default function List() {
   return (
     <>
       <div className={styles.tittle}>
+      <button onClick={() => router.push("/")} type="button">Voltar</button>
         <h1>Lista de produtos</h1>
       </div>
       <div className={styles.container}>
         <div className={styles.topbar}>
           <input type="text" placeholder="Busca de Produto" />
-          <button onClick={()=>router.push("")} type="button" className={styles.ProdCad}>
+          <button onClick={()=>router.push("prodCad")} type="button" className={styles.ProdCad}>
             Cadastro de Produto
           </button>
         </div>

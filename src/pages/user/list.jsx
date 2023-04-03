@@ -16,6 +16,7 @@ export default function List() {
   return (
     <>
       <div className={styles.tittle}>
+      <button onClick={() => router.push("/")} type="button">Voltar</button>
         <h1>Lista de usuários</h1>
       </div>
       <div className={styles.container}>
@@ -23,6 +24,9 @@ export default function List() {
           <input type="text" placeholder="Busca de usuario" />
           <button onClick={()=>router.push("userCad")} type="button" className={styles.userCad}>
             Cadastro de usuário
+          </button>
+          <button onClick={()=>router.push("userAlt")} type="button" className={styles.userCad}>
+            Alterar usuário
           </button>
         </div>
         {userList.map((user) => (

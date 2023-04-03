@@ -9,8 +9,8 @@ export default function Home() {
         <h1>Tela provisoria</h1>
       </div>
       <div className={styles.data}>
-        <button type="button">Lista de produtos</button>
-        <button onClick={()=>router.push("/user/list")} type="button">Lista de usuário</button>
+        <button onClick={() => router.push("/product/list")} type="button">Lista de produtos</button>
+        <button onClick={() => router.push("/user/list")} type="button">Lista de usuário</button>
       </div>
     </div>
   )

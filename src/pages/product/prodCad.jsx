@@ -46,7 +46,7 @@ export default function Home(props) {
       setImagens(reader.result)
     }
   }
-  
+
   const saveProduct = () => {
     fillProduct()
 
@@ -62,7 +62,7 @@ export default function Home(props) {
 
   return (
     <div>
-      <button>Voltar</button>
+      <button onClick={() => router.push("list")} type="button">Voltar</button>
       <h1>Cadastro de produtos</h1>
       <div className={styles.container}>
         <Input
