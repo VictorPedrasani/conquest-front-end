@@ -12,31 +12,24 @@ export default function List() {
       setUserList(data);
     }).catch((error) => console.error(error))
   }, [])
-
+  
   return (
     <>
       <div className={styles.tittle}>
       <button onClick={() => router.push("/")} type="button">Voltar</button>
-        <h1>Lista de usuários</h1>
+        <h1>Lista de produtos</h1>
       </div>
       <div className={styles.container}>
         <div className={styles.topbar}>
-          <input type="text" placeholder="Busca de usuario" />
-          <button onClick={()=>router.push("userCad")} type="button" className={styles.userCad}>
-            Cadastro de usuário
-          </button>
-          <button onClick={()=>router.push("userAlt")} type="button" className={styles.userCad}>
-            Alterar usuário
+          <input type="text" placeholder="Busca de Produto" />
+          <button onClick={()=>router.push("prodCad")} type="button" className={styles.ProdCad}>
+            Cadastro de Produto
           </button>
         </div>
         {userList.map((user) => (
           <UserItem key={user.id} user={user} />
         ))}
 
-        {/* <div className={styles.actions}>
-          <button className={styles.cancel}>Cancelar</button>
-          <button className={styles.save}>Salvar</button>
-        </div> */}
       </div>
     </>
   )
