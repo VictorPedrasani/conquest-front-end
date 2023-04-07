@@ -2,9 +2,27 @@ import { useState } from 'react'
 import { Toggle } from 'rsuite'
 import styles from './UserItem.module.scss'
 import 'rsuite/dist/rsuite.min.css'
+import { useRouter } from 'next/router'
 
 export function UserItem({ user }) {
   const [toggleIsActive, setToggleIsActive] = useState(false)
+
+  const router = useRouter()
+
+  const handleUpdateUserInfo = () => {
+
+    if (user) {
+      const queryUser = JSON.stringify(user)
+
+      router.push({
+        pathname: `/user/detail/${user.cpf}`,
+        query: { user: queryUser}
+      })
+    }
+    // TODO: push para a página userAlt
+    
+    
+  }
 
   return (
     <div className={styles.userCard}>
@@ -33,7 +51,7 @@ export function UserItem({ user }) {
             setToggleIsActive(value)
           }}
         />
-        <button type="button">Alterar</button>
+        <button onClick={handleUpdateUserInfo} type="button">Alterar</button>
       </div>
     </div>
   )
