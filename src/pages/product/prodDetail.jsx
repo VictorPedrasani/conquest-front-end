@@ -1,5 +1,5 @@
 import Carrossel from "../../components/Carrossel/Carrossel"
-export default function Home() {
+export default function ProdDetail() {
     const slides = [
         { url: "http://localhost:3000/images/image-1.jpg", title: "Fields" },
         { url: "http://localhost:3000/images/image-2.jpg", title: "Bridge" },

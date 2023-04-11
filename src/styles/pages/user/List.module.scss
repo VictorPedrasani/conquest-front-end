@@ -3,6 +3,17 @@
   display: flex;
   flex-direction: column;
   margin: 30px;
+  .back {
+    font-weight: bold;
+    background-color: #a3c4ff;
+    color: #12131b;
+    font-size: 16px;
+    height: 40px;
+    width: 40px;
+    border-radius: 2px;
+    border: none;
+    transition: background 250ms;
+  }
 }
 
 .container {
@@ -26,11 +37,27 @@
 .topbar {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: space-between;
   width: 50%;
+  .cad {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .userCad {
+      font-weight: bold;
+      background-color: #a3c4ff;
+      color: #12131b;
+      font-size: 16px;
+      height: 40px;
+      width: 40px;
+      border-radius: 2px;
+      border: none;
+      transition: background 250ms;
+      margin-top: 20px;
+    }
+  }
 
-  .userCad {
+  .userAlt {
     font-weight: bold;
     background-color: #a3c4ff;
     color: #12131b;

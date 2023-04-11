@@ -55,7 +55,7 @@ const ImageSlider = ({ slides }) => {
         backgroundPosition: 'center center' 
     }
 
-
+    
     const goToPrevious = () => {
         const isFirstSlide = currentIndex === 0
         const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;

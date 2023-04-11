@@ -51,7 +51,9 @@ export function UserItem({ user }) {
             setToggleIsActive(value)
           }}
         />
-        <button onClick={handleUpdateUserInfo} type="button">Alterar</button>
+        <button onClick={()=>router.push("userAlt")} type="button" className={styles.userAlt}>
+          Alterar
+        </button>
       </div>
     </div>
   )

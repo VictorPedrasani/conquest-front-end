@@ -7,7 +7,7 @@ import validarEmail from '@/util/validarEmail'
 import validarNome from '@/util/validarNome'
 import { useRouter } from 'next/router'
 
-export default function Home() {
+export default function UserCad() {
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
@@ -78,6 +78,9 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!validadeFields()){
+      return alert("Campo inválido.")
+    }
     const payload = {
       nome,
       cpf,
@@ -85,24 +88,25 @@ export default function Home() {
       senha,
       grupo,
     }
-
+    //TODO Chamar função para mandar para o Back e checar se o retorno da função deu como usuário cadastrado
+    //Depois que o usuário for cadastrado:
+    alert("Usuário Cadastrado!")
+    router.push("/user/list")
     console.log(JSON.stringify(payload))
     // mandar dados para o back
   }
 
-  const handleLogin = () => {
+  const validadeFields = () => {
     let isValidCPF = checaCPF(cpf)
     let isValidNome = checaNome(nome)
     let isValidEmail = checaEmail(email)
     let isValidSenha = checaSenha(senha, senha2)
     let idCheckedBotao = checaBotao()
 
-    if (isValidNome && isValidCPF && isValidEmail && isValidSenha && idCheckedBotao) {
-      //TODO Chamar função para mandar para o Back e checar se o retorno da função deu como usuário cadastrado
-      //Depois que o usuário for cadastrado:
-      alert("Usuário Cadastrado!")
-      router.push("/user/list")
+    if (isValidNome && isValidCPF && isValidEmail && isValidSenha && idCheckedBotao) { 
+      return true
     }
+    return false
   }
   return (
     <div className={styles.container}>
@@ -182,7 +186,7 @@ export default function Home() {
             }}>
               Cancelar
             </Button>
-            <Button type="submit" color="primary" onClick={handleLogin}>
+            <Button type="submit" color="primary">
               Salvar
             </Button>
           </div>
