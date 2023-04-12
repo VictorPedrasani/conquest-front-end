@@ -40,7 +40,7 @@ export const ApiUserAlt = async (nameUser, cpf, password, group, status) => {
     headers: {
       "Content-type": "application/json",
     },
-    body:object,
+    body: object,
   })
     .then(async (response) => {
       data = await response.json();
@@ -70,4 +70,30 @@ export const ApiUserList = async () => {
       //data = await error.json();
     });
   return data;
+  // Retornar apenas a lista
 };
+
+
+export const ApiUserBackLogin = async (email, password) => {
+  let data;
+  const object = JSON.stringify({
+    email: email,
+    password: password,
+  })
+  await fetch(`${url}/user/loginbackoffice`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: object,
+  })
+    .then(async (response) => {
+      data = await response.json();
+    })
+    .catch(async (error) => {
+      console.log(object)
+      //data = await error.json();
+    });
+  return data;
+};
+
