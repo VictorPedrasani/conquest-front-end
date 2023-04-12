@@ -1,55 +1,56 @@
 /* eslint-disable react/jsx-boolean-value */
-import { useState } from 'react'
-import styles from '@/styles/pages/user/UserCad.module.scss'
-import { Input } from '@/components/Input'
-import { Button } from '@/components/Button'
-import { useRouter } from 'next/router'
-import validarCPF from '@/util/validarCPF'
-import validarEmail from '@/util/validarEmail'
-import validarNome from '@/util/validarNome'
-
+import { useState } from "react";
+import styles from "@/styles/pages/user/UserCad.module.scss";
+import { Input } from "@/components/Input";
+import { Button } from "@/components/Button";
+import { useRouter } from "next/router";
+import validarCPF from "@/util/validarCPF";
+import validarNome from "@/util/validarNome";
+import { ApiUserAlt } from "@/services/api";
 
 export default function Home() {
-  const [nome, setNome] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [senha, setSenha] = useState('')
-  const [senha2, setSenha2] = useState('')
-  const [grupo, setGrupo] = useState('')
-  const [status, setStatus] = useState('')
-  const router = useRouter()
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [senha, setSenha] = useState("");
+  const [senha2, setSenha2] = useState("");
+  const [grupo, setGrupo] = useState("");
+  const [status, setStatus] = useState("");
+  const router = useRouter();
 
   const checaNome = (nome) => {
     if (validarNome(nome) == false) {
-      alert("Nome Inválido! Verifique se o nome não contém caracteres especiais")
-      setNome('')
-      return false
+      alert(
+        "Nome Inválido! Verifique se o nome não contém caracteres especiais"
+      );
+      setNome("");
+      return false;
     } else {
-      setNome(nome)
-      return true
+      setNome(nome);
+      return true;
     }
-  }
+  };
 
   const checaCPF = (cpf) => {
     if (validarCPF(cpf) == false) {
-      alert("CPF Inválido! Verifique a formatação do CPF")
-      setCpf('')
-      return false
+      alert("CPF Inválido! Verifique a formatação do CPF");
+      setCpf("");
+      return false;
     } else {
-      setCpf(cpf)
-      return true
+      setCpf(cpf);
+      return true;
     }
-  }
+  };
 
   const checaSenha = (senha, senha2) => {
     if (senha !== senha2) {
-      alert("Senha Inválida!!!")
-      setSenha('')
-      setSenha2('')
-      return false
+      alert("Senha Inválida!!!");
+      setSenha("");
+      setSenha2("");
+      return false;
     } else {
-      return true
+      return true;
     }
-  }
+  };
 
   const checaBotaoGrupo = () => {
     const radioButtons = document.querySelectorAll('input[name="grupo"]');
@@ -64,8 +65,8 @@ export default function Home() {
     if (!isRadioSelected) {
       alert("Nenhum botão de grupo selecionado!!!");
     }
-    return isRadioSelected
-  }
+    return isRadioSelected;
+  };
 
   const checaBotaoStatus = () => {
     const radioButtons = document.querySelectorAll('input[name="status"]');
@@ -80,44 +81,43 @@ export default function Home() {
     if (!isRadioSelected) {
       alert("Nenhum botão de status selecionado!!!");
     }
-    return isRadioSelected
-  }
-
-
+    return isRadioSelected;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const payload = {
-      nome,
-      cpf,
-      senha,
-      grupo,
-      status,
+    e.preventDefault();
+    if (!validadeFields()) {
+      return alert("Campo inválido.");
     }
+    let data = ApiUserAlt(nome, cpf, senha, grupo, status);
+    console.log(data);
+    alert("Usuário alterado!");
+  };
 
-    console.log(JSON.stringify(payload))
-    // mandar dados para o back
-  }
+  const validadeFields = () => {
+    let isValidCPF = checaCPF(cpf);
+    let isValidNome = checaNome(nome);
+    let isValidSenha = checaSenha(senha, senha2);
+    let idCheckedBotaoGrupo = checaBotaoGrupo();
+    let idCheckedBotaoStatus = checaBotaoStatus();
 
-  const handleLogin = () => {
-    let isValidCPF = checaCPF(cpf)
-    let isValidNome = checaNome(nome)
-    let isValidSenha = checaSenha(senha, senha2)
-    let idCheckedBotaoGrupo = checaBotaoGrupo()
-    let idCheckedBotaoStatus = checaBotaoStatus()
-
-    if (isValidNome && isValidCPF && isValidSenha && idCheckedBotaoGrupo && idCheckedBotaoStatus) {
-      //TODO Chamar função para mandar para o Back e checar se o retorno da função deu como usuário alterado
-      //Depois que o usuário for alterado:
-      alert("Usuário Alterado!")
-      router.push("/user/list")
+    if (
+      isValidNome &&
+      isValidCPF &&
+      isValidSenha &&
+      idCheckedBotaoGrupo &&
+      idCheckedBotaoStatus
+    ) {
+      return true;
     }
-
-  }
+    return false;
+  };
   return (
     <div className={styles.container}>
       <div className={styles.tittle}>
-        <button onClick={() => router.push("/user/list")} type="button">Voltar</button>
+        <button onClick={() => router.push("/user/list")} type="button">
+          Voltar
+        </button>
         <h1>Alterar usuário</h1>
       </div>
       <div className={styles.data}>
@@ -183,24 +183,28 @@ export default function Home() {
             value={2}
           />
           Ativo
-
           <div className={styles.submit}>
-            <Button type="reset" color="cancel" onClick={() => {
-              setNome('');
-              setCpf('');
-              setGrupo('');
-              setSenha('');
-              setSenha2('');
-              setStatus('');
-            }}>
+            <Button
+              type="reset"
+              color="cancel"
+              onClick={() => {
+                setNome('');
+                setCpf('');
+                setEmail('');
+                setGrupo('');
+                setSenha('');
+                setSenha2('');
+                setStatus('');
+              }}
+            >
               Cancelar
             </Button>
-            <Button type="submit" color="primary" onClick={handleLogin}>
+            <Button type="submit" color="primary">
               Salvar
             </Button>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 }

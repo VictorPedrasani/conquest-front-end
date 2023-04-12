@@ -6,6 +6,7 @@ import validarCPF from '@/util/validarCPF'
 import validarEmail from '@/util/validarEmail'
 import validarNome from '@/util/validarNome'
 import { useRouter } from 'next/router'
+import { ApiUserCad } from '@/services/api'
 
 export default function UserCad() {
   const [nome, setNome] = useState('')
@@ -81,19 +82,9 @@ export default function UserCad() {
     if (!validadeFields()){
       return alert("Campo inválido.")
     }
-    const payload = {
-      nome,
-      cpf,
-      email,
-      senha,
-      grupo,
-    }
-    //TODO Chamar função para mandar para o Back e checar se o retorno da função deu como usuário cadastrado
-    //Depois que o usuário for cadastrado:
+    let data = ApiUserCad(nome, cpf, email, senha, grupo)
+    console.log(data)
     alert("Usuário Cadastrado!")
-    router.push("/user/list")
-    console.log(JSON.stringify(payload))
-    // mandar dados para o back
   }
 
   const validadeFields = () => {

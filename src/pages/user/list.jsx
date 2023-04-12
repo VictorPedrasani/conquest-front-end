@@ -1,17 +1,26 @@
 import { useEffect, useState } from 'react'
 import styles from '@/styles/pages/user/List.module.scss'
 import { UserItem } from '@/components/pages/user/UserItem'
-import { api } from '@/services/api'
+import { ApiUserList } from '@/services/api'
 import { useRouter } from "next/router"
 import { Button } from '@/components/Button'
 
 export default function List() {
   const [userList, setUserList] = useState([])
   const router = useRouter()
+
+  const fetchUserList = async () => {
+    try {
+      const listaUsuario = await ApiUserList()
+      setUserList(listaUsuario)
+      console.log(userList)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    api.get('/conquest/user/listusers').then(({data}) => {
-      setUserList(data);
-    }).catch((error) => console.error(error))
+    fetchUserList()
   }, [])
 
   return (
@@ -32,11 +41,6 @@ export default function List() {
         {userList.map((user) => (
           <UserItem key={user.id} user={user} />
         ))}
-
-        {/* <div className={styles.actions}>
-          <button className={styles.cancel}>Cancelar</button>
-          <button className={styles.save}>Salvar</button>
-        </div> */}
       </div>
     </>
   )
