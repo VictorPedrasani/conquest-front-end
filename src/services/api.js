@@ -97,3 +97,45 @@ export const ApiUserBackLogin = async (email, password) => {
   return data;
 };
 
+export const ApiProdList = async () => {
+  let data;
+  const object = []
+  await fetch(`${url}/backoffice/product/list`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    }
+  })
+    .then(async (response) => {
+      data = await response.json();
+    })
+    .catch(async (error) => {
+      console.log(object)
+      //data = await error.json();
+    });
+  return data;
+  // Retornar apenas a lista
+};
+
+export const ApiCEPList = async (cep = '00000000') => {
+  let data;
+
+  await fetch(`viacep.com.br/ws/${cep}/json/`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    }
+  })
+    .then(async (response) => {
+      data = await response.json();
+      console.log(data)
+    })
+    .catch(async (error) => {
+      console.log(object)
+      //data = await error.json();
+    });
+  return data;
+  // Retornar apenas a lista
+};
+// 
+

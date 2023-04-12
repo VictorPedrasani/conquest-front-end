@@ -102,7 +102,7 @@ export default function UserCad() {
   return (
     <div className={styles.container}>
       <div className={styles.tittle}>
-        <button onClick={() => router.push("/user/list")} type="button">Voltar</button>
+        <button onClick={() => router.push("/user/userList")} type="button">Voltar</button>
         <h1>Cadastrar usuário</h1>
       </div>
       <div className={styles.data}>

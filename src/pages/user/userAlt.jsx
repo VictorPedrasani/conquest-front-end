@@ -115,7 +115,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.tittle}>
-        <button onClick={() => router.push("/user/list")} type="button">
+        <button onClick={() => router.push("/user/userList")} type="button">
           Voltar
         </button>
         <h1>Alterar usuário</h1>
