@@ -137,5 +137,28 @@ export const ApiCEPList = async (cep = '00000000') => {
   return data;
   // Retornar apenas a lista
 };
-// 
+
+export const ApiUserStatus = async (cpf, statusUser) => {
+  let data;
+  const object = JSON.stringify({
+    cpf: cpf,
+    statusUser: statusUser,
+  })
+  await fetch(`${url}/backoffice/user/update/status`, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: object,
+  })
+    .then(async (response) => {
+      data = await response.json();
+    })
+    .catch(async (error) => {
+      console.log(object)
+      //data = await error.json();
+    });
+  console.log(data);
+  return data;
+};
 

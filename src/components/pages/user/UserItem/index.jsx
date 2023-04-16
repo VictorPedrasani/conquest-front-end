@@ -1,27 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Toggle } from 'rsuite'
 import styles from './UserItem.module.scss'
 import 'rsuite/dist/rsuite.min.css'
 import { useRouter } from 'next/router'
+import { ApiUserStatus } from '@/services/api'
 
 export function UserItem({ user }) {
-  const [toggleIsActive, setToggleIsActive] = useState(false)
-
+  const [toggleIsActive, setToggleIsActive] = useState(user.status)
   const router = useRouter()
 
-  const handleUpdateUserInfo = () => {
-
-    if (user) {
-      const queryUser = JSON.stringify(user)
-
-      router.push({
-        pathname: `/user/detail/${user.cpf}`,
-        query: { user: queryUser}
-      })
+  useEffect(() => {
+    const updateStatus = async () => {
+      const response = await ApiUserStatus(user.cpf, toggleIsActive)
+      setToggleIsActive(response.statusUser)
     }
-    // TODO: push para a página userAlt
-    
-    
+    updateStatus()
+  }, [toggleIsActive, user.cpf])
+
+  const handleToggle = () => {
+    setToggleIsActive(!toggleIsActive)
   }
 
   return (
@@ -46,12 +43,10 @@ export function UserItem({ user }) {
       </div>
       <div className={styles.userActions}>
         <Toggle
-          checked={user.status}
-          onChange={(value) => {
-            setToggleIsActive(value)
-          }}
+          checked={toggleIsActive}
+          onChange={handleToggle}
         />
-        <button onClick={()=>router.push("userAlt")} type="button" className={styles.userAlt}>
+        <button onClick={() => router.push("userAlt")} type="button" className={styles.userAlt}>
           Alterar
         </button>
       </div>
